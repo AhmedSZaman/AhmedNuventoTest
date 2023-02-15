@@ -1,0 +1,23 @@
+Object Users
+
+    string  firstName
+    string  lastName
+    int     accountOwnerID
+    int     mobile
+
+    function Users(newfirstName, newlastName, newaccountOwnerID, newMobile)
+        firstName       = newfirstName
+        lastName        = newlastName
+        accountOwnerID  = newaccountOwnerID
+        mobile          = newMobile
+
+    int FUNCTION getUserName
+        userName = Users[currentUser].getFirstName + Users[currentUser].getLastName
+        return userName
+
+
+    int function getAccountOwnerID
+        return balance
+
+    int function getMobile
+        return mobile

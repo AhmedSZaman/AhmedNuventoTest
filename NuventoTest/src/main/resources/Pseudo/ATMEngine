@@ -1,0 +1,40 @@
+object ATMEngine
+
+    Collection Accounts[]
+    Collection Users[]
+    INT currentUser = -1
+
+    intiliseATM
+        loads data
+        ATMDisplay.login
+
+    void FUNCTION userLogin(userInput)
+        FOR x = 0 step 1 until Users[].length
+            IF (Users[x].getUserID == userInput)
+                currentUser = x
+
+
+        IF currentUser == -1
+            ATMDisplay.displayError
+            ATMDisplay.displayLogin
+        ELSE
+            ATMDisplay.displayMenu(Users[currentUser].getUserName)
+
+
+    void FUNCTION mainMenu(userOptionInput)
+        CASE userOption of
+            1: ATMDisplay.displayDeposit()
+            2: withdrawMoney()
+            3: checkBalance()
+            4: quitApp()
+          ELSE SOME SORT OF ERROR CHECK
+
+   depositMoney
+
+
+    accountTypeAccess
+
+    withdrawMoney
+    checkBalance
+    updateData
+    quitApp

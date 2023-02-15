@@ -1,0 +1,25 @@
+Object ATMController
+
+    ATMEngine.intialiseATM
+    INPUT userIDInput
+
+    ATMEngine.userLogin(userIDInput)
+
+    INPUT userOptionInput
+    ATMEngine.mainMenu(userOPtionInput)
+    CASE userOption of
+        1:
+            ATMDisplay.displayDeposit()
+            INPUT userDepositInput
+            ATMENgine.deposit(userDepositInput)
+        2:
+            ATMDisplay.displayWithdraw()
+            INPUT userWithdrawInput
+            ATMENgine.deposit(userWithdrawInput)
+        3:
+            ATMDisplay.displayBalance()
+        4:
+            quitApp()
+
+
+

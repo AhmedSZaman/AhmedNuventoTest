@@ -1,0 +1,28 @@
+Object Account
+
+    int ownerID
+    int accNumber
+    int balance
+
+    function Account(newOwnerID, newAccNumber, newBalance)
+        ownerID = newOwnerID
+        accNumber = newAccNumber
+        balance = newBalance
+
+    int function getAccountOwnerID
+        return ownerID
+
+    int function getAccountNumber
+        return number
+
+
+    int function getBalance
+        return balance
+
+    void function setBalance: Pass newBalance
+        balance = newBalance
+
+
+
+
+

@@ -1,0 +1,21 @@
+Object ATMDisplay
+
+    void Function displayLogin
+        print "Please enter User ID"
+
+    void FUNCTION displayMenu(userName)
+        println("Welcome "+ userName+  "Choose Option")
+        println("Option1")
+        println("Option2")
+        println("Option3")
+
+    void Function displayDeposit()
+        println("Please enter money to deposit")
+
+    displayBalance
+
+    displayAccountSelect
+
+    displayError
+
+    displayEndApp
