@@ -1,9 +1,9 @@
 Object Users
 
-    string  firstName
-    string  lastName
-    int     accountOwnerID
-    int     mobile
+    string  firstName       = "NULL"
+    string  lastName        = "NULL"
+    int     accountOwnerID  = -1
+    int     mobile          = -1
 
     function Users(newfirstName, newlastName, newaccountOwnerID, newMobile)
         firstName       = newfirstName

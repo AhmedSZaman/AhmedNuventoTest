@@ -1,8 +1,8 @@
 Object Account
 
-    int ownerID
-    int accNumber
-    int balance
+    int ownerID     = -1
+    int accNumber   = -1
+    int balance     = -1
 
     function Account(newOwnerID, newAccNumber, newBalance)
         ownerID = newOwnerID
@@ -14,7 +14,6 @@ Object Account
 
     int function getAccountNumber
         return number
-
 
     int function getBalance
         return balance

@@ -2,39 +2,74 @@ object ATMEngine
 
     Collection Accounts[]
     Collection Users[]
-    INT currentUser = -1
+    Users currentUser = -1
+    AccountSaving currentAccountSaving
+    AccountCheque currentChequeAccount
 
-    intiliseATM
+    VOID FUNCTION intialiseATM
         loads data
-        ATMDisplay.login
+        Users initilised
+        Accounts Initlised
 
     void FUNCTION userLogin(userInput)
-        FOR x = 0 step 1 until Users[].length
-            IF (Users[x].getUserID == userInput)
-                currentUser = x
+        FOR every user in users:
+            IF (user.getUserID == userInput)
+                currentUser = user
 
-
-        IF currentUser == -1
+        IF currentUser.getUserID == -1
             ATMDisplay.displayError
             ATMDisplay.displayLogin
         ELSE
-            ATMDisplay.displayMenu(Users[currentUser].getUserName)
+            ATMDisplay.displayMenu(Users[currentUser].getUserName)-----------
+            FOR every savingAccount in savingAccounts:
+                IF (currentUser.getUserID == savingAccount.getOwnerID)
+                    currentAccountSaving = savingAccount
 
+            FOR every chequeAccount in chequeAccounts:
+                IF (currentUser.getUserID == savingAccount.getOwnerID)
+                    currentChequeAccount = chequeAccount
 
-    void FUNCTION mainMenu(userOptionInput)
+   ???? void FUNCTION mainMenu(userOptionInput)
         CASE userOption of
             1: ATMDisplay.displayDeposit()
             2: withdrawMoney()
             3: checkBalance()
-            4: quitApp()
-          ELSE SOME SORT OF ERROR CHECK
-
-   depositMoney
+            4: quitApp()???
 
 
-    accountTypeAccess
+   VOID FUNCTION depositMoney PARAM (INT userDepositInput, userSelectedAccount)
+        IF userSelectedAccount == 1 THEN
+            currentChequeAccount.balance += userDepositInput
+        ELSEIF == 2 THEN
+           currentSavingAccount.balance += userDepositInput
+        ELSE
+            ERROR
 
-    withdrawMoney
-    checkBalance
+
+   INT FUNCTION getAccTypeBalance PARAM(INT userSelectedAccount)
+        INT balanceReturned
+        IF userSelectedAccount == 1 THEN
+            balanceReturned = currentChequeAccount.balance
+        ELSE
+            balanceReturned = currentSavingAccount.balance
+
+        return balanceReturned
+
+
+   VOID FUNCTION withdrawMoney PARAM (INT userWithdrawInput, INT userSelectedAccount)
+        INT currentBalance = getAccTypeBalance(userSelectedAccount)
+
+        IF  currentBalance is greater than or equal to userWithdrawInput THEN
+            IF userSelectedAccount == 1 THEN
+                    currentChequeAccount.balance -= userWithdrawInput
+            ELSEIF == 2  THEN
+                    currentSavingAccount.balance -= userWithdrawInput
+        ELSE
+            ERROR NOT ENUFF MONEIZ
+
+   TUPLE FUNCTION checkBalance
+        return currentChequeAccount.balance, currentSavingAccount.balance
+
     updateData
     quitApp
+        Save to file
