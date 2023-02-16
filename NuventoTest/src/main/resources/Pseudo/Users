@@ -17,7 +17,7 @@ Object Users
 
 
     int function getAccountOwnerID
-        return balance
+        return accountOwnerID
 
     int function getMobile
         return mobile
