@@ -1,17 +1,17 @@
 package model
 
 class  Account {
-  var ownerID: Int = -1
+  var ownerID: String = "Null"
   var accNumber: Int = -1
   var balance: Float = -1.00
 
-  def Account(newOwnerID: Int, newAccNumber: Int, newBalance: Float): Unit = {
-    val ownerID = newOwnerID
-    val accNumber = newAccNumber
-    var balance = newBalance
+  def Account(newOwnerID: String, newAccNumber: Int, newBalance: Float): Unit = {
+    this.ownerID = newOwnerID
+    this.accNumber = newAccNumber
+    this.balance = newBalance
   }
 
-  def getOwnerID(): Int = {
+  def getOwnerID(): String = {
     return ownerID
   }
 

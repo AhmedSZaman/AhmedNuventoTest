@@ -1,11 +1,16 @@
 package controller
 import model.Account
 import model.AccountSaving
+import model.ATMEngine
 object ATMContoller {
   def main(args: Array[String]): Unit = {
     println("Hello World!")
-    var acc = new Account
-    acc.Account(1,1,1.00)
+    var acc = new AccountSaving
+    acc.Account("01",1,1.00)
     println(acc.getOwnerID())
+    var engineAtm = ATMEngine
+
+
+    engineAtm.intialise()
   }
 }
