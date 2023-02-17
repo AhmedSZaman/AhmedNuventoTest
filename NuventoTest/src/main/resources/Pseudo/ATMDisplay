@@ -23,8 +23,8 @@ Object ATMDisplay
         println("How much do you wish to withdraw? Balance =" + accountBalance)
 
     VOID FUNCTION displayBalance(TUPLE accountBalance)
-        println("Cheque Balance = $" + accountBalnce(1))
-        println("Saving Balance = $" + accountBalnce(2))
+        println("Cheque Balance = $" + accountBalnce(0))
+        println("Saving Balance = $" + accountBalnce(1))
 
 
     displayError(String errorMsg)

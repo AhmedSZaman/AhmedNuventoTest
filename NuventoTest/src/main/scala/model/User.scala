@@ -1,12 +1,12 @@
-package Model
+package model
 
-object User {
+class User{
   var firstName: String = "NULL"
   var lastName: String = "NULL"
   var ownerID: Int = -1
   var mobile: Int = -1
 
-  def User(newfirstName: String,newlastName: String, 
+  def User(newfirstName: String,newlastName: String,
            newaccountOwnerID: Int, newMobile: Int) ={
     firstName = newfirstName
     lastName = newlastName
@@ -19,13 +19,13 @@ object User {
     var userName: String = s"$firstName  $lastName"
     return userName
   }
-  
+
   def getAccountOwnerID: Int ={
     return ownerID
   }
   def getMobile: Int={
     return mobile
   }
-  
+
 
 }

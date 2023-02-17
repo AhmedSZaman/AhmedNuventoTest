@@ -1,14 +1,14 @@
-package Model
+package model
 
-class Account {
+class  Account {
   var ownerID: Int = -1
   var accNumber: Int = -1
   var balance: Float = -1.00
 
   def Account(newOwnerID: Int, newAccNumber: Int, newBalance: Float): Unit = {
-    ownerID = newOwnerID
-    accNumber = newAccNumber
-    balance = newBalance
+    val ownerID = newOwnerID
+    val accNumber = newAccNumber
+    var balance = newBalance
   }
 
   def getOwnerID(): Int = {

@@ -1,5 +1,0 @@
-package Controller
-
-object ATMContoller {
-
-}
