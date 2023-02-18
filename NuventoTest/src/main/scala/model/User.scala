@@ -3,15 +3,14 @@ package model
 class User{
   var firstName: String = "NULL"
   var lastName: String = "NULL"
-  var ownerID: Int = -1
+  var ownerID: String = "NULL"
   var mobile: Int = -1
 
-  def User(newfirstName: String,newlastName: String,
-           newaccountOwnerID: Int, newMobile: Int) ={
-    firstName = newfirstName
-    lastName = newlastName
-    ownerID = newaccountOwnerID
-    mobile = newMobile
+  def User(firstName: String, lastName: String, mobile: Int, ownerID: String) ={
+    this.firstName = firstName
+    this.lastName = lastName
+    this.ownerID = ownerID
+    this.mobile = mobile
   }
 
 
@@ -20,12 +19,16 @@ class User{
     return userName
   }
 
-  def getAccountOwnerID: Int ={
+  def getOwnerID: String ={
     return ownerID
   }
   def getMobile: Int={
     return mobile
   }
 
+  def userToString(): String = {
+    var userString: String = (s"$firstName,$lastName,$ownerID,$mobile")
+    return userString
+  }
 
 }

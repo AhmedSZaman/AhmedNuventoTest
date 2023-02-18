@@ -12,5 +12,8 @@ object ATMContoller {
 
 
     engineAtm.intialise()
+    engineAtm.userLogin("001")
+    engineAtm.getAccountTypeBalance(4)
+    engineAtm.quitApp()
   }
 }

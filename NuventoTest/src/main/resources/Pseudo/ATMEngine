@@ -46,8 +46,8 @@ object ATMEngine
             ERROR
 
 
-   INT FUNCTION getAccTypeBalance PARAM(INT userSelectedAccount)
-        INT balanceReturned
+   INT FUNCTION getAccTypeBalance PARAM(FLOAT userSelectedAccount)
+        FLOAT balanceReturned
         IF userSelectedAccount == 1 THEN
             balanceReturned = currentChequeAccount.balance
         ELSE

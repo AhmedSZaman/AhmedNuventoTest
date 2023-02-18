@@ -26,5 +26,10 @@ class  Account {
   def setBalance(newBalance: Float): Unit = {
     balance = newBalance
   }
+  
+  def accToString(): String = {
+    var accString: String = (s"$ownerID ||| $accNumber ||| ||| $balance")
+    return  accString
+  }
 
 }
