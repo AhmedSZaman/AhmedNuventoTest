@@ -7,10 +7,11 @@ object ATMDisplay {
   }
 
   def displayMenu(userName: String): Unit = {
-    println("Welcome " + userName + "Choose Option")
-    println("Option1")
-    println("Option2")
-    println("Option3")
+    println("Welcome " + userName + ", Choose Option")
+    println("1 - Deposit Money")
+    println("2 - Withdraw Money")
+    println("3 - Check Balance")
+    println("4 - Quit App")
   }
 
   def displayAccountSelect(optionSelected: String, chequeNumber: Int, savingNumber: Int): Unit ={
@@ -23,11 +24,11 @@ object ATMDisplay {
     println("Please enter money to deposit")
   }
 
-  def displayWithdraw(accountBalance: Int): Unit = {
+  def displayWithdraw(accountBalance: Float): Unit = {
     println("How much do you wish to withdraw? Balance =" + accountBalance)
   }
 
-  def displayBalance(accountBalance: (Int,Int)): Unit = {
+  def displayBalance(accountBalance: (Float,Float)): Unit = {
     println("Cheque Balance = $" + accountBalance(0))
     println("Saving Balance = $" + accountBalance(1))
   }

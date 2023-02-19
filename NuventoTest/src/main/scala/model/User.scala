@@ -1,10 +1,10 @@
 package model
 
 class User{
-  var firstName: String = "NULL"
-  var lastName: String = "NULL"
-  var ownerID: String = "NULL"
-  var mobile: Int = -1
+  private var firstName: String = "NULL"
+  private var lastName: String = "NULL"
+  private var ownerID: String = "NULL"
+  private var mobile: Int = -1
 
   def User(firstName: String, lastName: String, mobile: Int, ownerID: String) ={
     this.firstName = firstName
@@ -15,7 +15,7 @@ class User{
 
 
   def getUserName(): String = {
-    var userName: String = s"$firstName  $lastName"
+    var userName: String = s"$firstName $lastName"
     return userName
   }
 
