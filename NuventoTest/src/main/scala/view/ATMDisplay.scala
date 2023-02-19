@@ -33,11 +33,8 @@ object ATMDisplay {
     println("Saving Balance = $" + accountBalance(1))
   }
 
-  def displayError(errorMsg: String): Unit = {
-    println("ERROR -" + errorMsg)
-  }
-  def displayEndApp():Unit = {
-    // PRINT ALL ACCOUTNS AND USERS
+  def displayEndApp(atmData: String):Unit = {
+    println(atmData)
   }
 
 

@@ -3,31 +3,30 @@ package model
 class User{
   private var firstName: String = "NULL"
   private var lastName: String = "NULL"
-  private var ownerID: String = "NULL"
   private var mobile: Int = -1
-
-  def User(firstName: String, lastName: String, mobile: Int, ownerID: String) ={
-    this.firstName = firstName
-    this.lastName = lastName
-    this.ownerID = ownerID
-    this.mobile = mobile
+  private var ownerID: String = "NULL"
+  
+  
+  def User(userDetails: (String, String, Int, String)): Unit ={
+    this.firstName = userDetails(0)
+    this.lastName = userDetails(1)
+    this.mobile = userDetails(2)
+    this.ownerID = userDetails(3)
+    
   }
 
 
   def getUserName(): String = {
-    var userName: String = s"$firstName $lastName"
+    val userName: String = s"$firstName $lastName"
     return userName
   }
 
   def getOwnerID: String ={
     return ownerID
   }
-  def getMobile: Int={
-    return mobile
-  }
 
   def userToString(): String = {
-    var userString: String = (s"$firstName,$lastName,$ownerID,$mobile")
+    val userString: String = s"$firstName,$lastName,$ownerID,$mobile"
     return userString
   }
 

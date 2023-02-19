@@ -2,7 +2,7 @@ package model
 
 class AccountCheque extends Account {
   override def accToString(): String = {
-    var accString: String = (s"$ownerID ||| $accNumber ||| Cheque ||| $balance")
+    val accString: String = s"$ownerID ||| $accNumber ||| Cheque ||| ${"%.2f".format(balance)}"
     return accString
   }
 }

@@ -19,62 +19,67 @@ object ATMEngine {
   var currAccSaving = new AccountSaving
   var currAccCheque = new AccountCheque
 
-  def intialise(): Unit = {
+  def initialise(): Unit = {
     val openingAccData = Source.fromFile("src/main/resources/data/OpeningAccountsData.txt")
     for (line <- openingAccData.getLines()){
+
       val dataLine = line.split("\\|\\|\\|")
-      val tempAccount = new Account()
       if (dataLine(2).matches("Cheque")){
         val tempChequeAcc = new AccountCheque()
-        //case class chequeData (ownerID: String, AccNumber: Int, Balance: Float)
-        //val tempChequeData = (dataLine(0),dataLine(1).toInt,dataLine(3).toFloat)
-        tempChequeAcc.Account(dataLine(0),dataLine(1).toInt,dataLine(3).toFloat)
+        val accChequeDetails = (dataLine(0),dataLine(1).toInt,dataLine(3).toFloat)
+        tempChequeAcc.Account(accChequeDetails)
         accCheques.append(tempChequeAcc)
       }
+
       else{
         val tempSavingAcc = new AccountSaving()
-        case class savingsData (ownerID: String, AccNumber: Int, Balance: Float)
-        val tempSavingsData = savingsData(dataLine(0), dataLine(1).toInt, dataLine(3).toFloat)
-        tempSavingAcc.Account(dataLine(0), dataLine(1).toInt, dataLine(3).toFloat)
+        val accSavingDetails = (dataLine(0), dataLine(1).toInt, dataLine(3).toFloat)
+        tempSavingAcc.Account(accSavingDetails)
         accSavings.append(tempSavingAcc)
-
       }
-
     }
     openingAccData.close()
+
     val openingUserData = Source.fromFile("src/main/resources/data/UserInfo.txt")
     for (line <- openingUserData.getLines()) {
       val userDataLine = line.split(",")
       val tempUser = new User()
-      tempUser.User(userDataLine(0),userDataLine(1),userDataLine(2).toInt,userDataLine(3))
+      val userDetails = (userDataLine(0),userDataLine(1),userDataLine(2).toInt,userDataLine(3))
+      tempUser.User(userDetails)
       users.append(tempUser)
-
     }
-
+    openingUserData.close()
   }
 
   case class ErrorHandling(ErrorMsg: String) extends Exception(ErrorMsg){}
+
   def userLogin(userInput: String): Unit = {
-    for(tempUser <- 0 until users.length){
-      if (users(tempUser).getOwnerID.matches((userInput))){
+
+    for(tempUser <- users.indices){
+      if (users(tempUser).getOwnerID.matches(userInput)){
         currUser = users(tempUser)
       }
     }
+
     if(currUser.getOwnerID.matches("NULL")){
-      throw new ErrorHandling(s"UserID $userInput Aint found ma guy")
+      throw ErrorHandling(s"UserID $userInput Aint found ma guy")
     }
     else{
-      for(accSaving <- 0 until accSavings.length){
-        val accOwneerID = accSavings(accSaving).getOwnerID()
-        if(currUser.getOwnerID.matches(accOwneerID)) currAccSaving = accSavings(accSaving)
-        else currAccSaving.Account("NULL",-1,0.00)
-      }
-      for (accCheque <- 0 until accCheques.length) {
-        val accOwneerID = accCheques(accCheque).getOwnerID()
-        if (currUser.getOwnerID.matches(accOwneerID)) currAccCheque = accCheques(accCheque)
-        else currAccCheque.Account("NULL",-1,0.00)
+
+      for(accSaving <- accSavings.indices){
+
+        val accOwnerID = accSavings(accSaving).getOwnerID()
+        if(currUser.getOwnerID.matches(accOwnerID)) currAccSaving = accSavings(accSaving)
 
       }
+      if !currAccSaving.getOwnerID().matches(userInput) then currAccSaving.Account("NULL", -1, 0.00.toFloat)
+
+      for (accCheque <- accCheques.indices) {
+        val accOwneerID = accCheques(accCheque).getOwnerID()
+        if (currUser.getOwnerID.matches(accOwneerID)) currAccCheque = accCheques(accCheque)
+
+      }
+      if !currAccCheque.getOwnerID().matches(userInput) then currAccCheque.Account("NULL",-1,0.00.toFloat)
     }
   }
 
@@ -103,12 +108,12 @@ object ATMEngine {
         currAccSaving.setBalance(newBalance)
       }
     }
-    else throw new ErrorHandling(s"Amount entered $userSelectedAccount is greater than amount in the account $currBalance") //CHANGE
+    else throw ErrorHandling(s"Amount entered $userSelectedAccount is greater than amount in the account $currBalance") //CHANGE
   }
 
   def userInputAccCheck(userSelectedAccount: Int): Unit={
     if (userSelectedAccount != 1 && userSelectedAccount != 2 )
-      {throw new ErrorHandling(s"Account $userSelectedAccount is an invalid option")}
+      {throw ErrorHandling(s"Account $userSelectedAccount is an invalid option")}
   }
 
   def checkBalance():(Float,Float) = {
@@ -126,15 +131,15 @@ object ATMEngine {
 
   def quitApp(): Unit = {
     val f = new FileWriter("outputFile1.txt")
-    val b = new BufferedWriter(f);
+    val b = new BufferedWriter(f)
     for (user: User<- users){
       f.write(user.userToString() + "\n")
     }
     b.close()
     f.close()
 
-    val f2 = new FileWriter("outputFile2.txt");
-    val b2 = new BufferedWriter(f2);
+    val f2 = new FileWriter("outputFile2.txt")
+    val b2 = new BufferedWriter(f2)
     for (savingAcc: AccountSaving <- accSavings) {
       f2.write(savingAcc.accToString() + "\n")
     }
@@ -144,5 +149,19 @@ object ATMEngine {
     b2.close()
     b2.close()
 
+  }
+
+  def dataToString (): String = {
+    var superString: String = ""
+    for (user: User <- users) {
+      superString += (user.userToString() + "\n")
+    }
+    for (savingAcc: AccountSaving <- accSavings) {
+      superString += (savingAcc.accToString() + "\n")
+    }
+    for (chequeAcc: AccountCheque <- accCheques) {
+      superString += (chequeAcc.accToString() + "\n")
+    }
+    superString
   }
 }

@@ -5,10 +5,10 @@ class  Account {
   var accNumber: Int = -1
   var balance: Float = -1.00
 
-  def Account(newOwnerID: String, newAccNumber: Int, newBalance: Float): Unit = {
-    this.ownerID = newOwnerID
-    this.accNumber = newAccNumber
-    this.balance = newBalance
+  def Account(accountDetails: (String, Int, Float)): Unit = {
+    this.ownerID = accountDetails(0)
+    this.accNumber = accountDetails(1)
+    this.balance = accountDetails(2)
   }
 
   def getOwnerID(): String = {
@@ -28,8 +28,7 @@ class  Account {
   }
 
   def accToString(): String = {
-    var accString: String = (s"$ownerID ||| $accNumber ||| ||| $balance")
-    return  accString
+    return "account details not found"
   }
 
 }
