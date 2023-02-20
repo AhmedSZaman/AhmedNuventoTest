@@ -1,9 +1,9 @@
 package model
 
 class  Account {
-  var ownerID: String = "Null"
-  var accNumber: Int = -1
-  var balance: Float = -1.00
+  private var ownerID: String = "Null"
+  private var accNumber: Int = -1
+  private var balance: Float = -1.00
 
   def Account(accountDetails: (String, Int, Float)): Unit = {
     this.ownerID = accountDetails(0)

@@ -1,6 +1,6 @@
 package view
 
-object ATMDisplay {
+class ATMDisplay {
 
   def displayLogin(): Unit ={
     println( "Please enter User ID")
@@ -14,10 +14,10 @@ object ATMDisplay {
     println("4 - Quit App")
   }
 
-  def displayAccountSelect(optionSelected: String, chequeNumber: Int, savingNumber: Int): Unit ={
+  def displayAccountSelect(optionSelected: String, accoutNumber: (Int, Int)): Unit ={
     println("Which Account would you like to " + optionSelected)
-    println("1 For " + chequeNumber + " (Cheque)")
-    println("2 For " + savingNumber + " (Saving)")
+    println("1 For " + accoutNumber(0) + " (Cheque)")
+    println("2 For " + accoutNumber(1) + " (Saving)")
   }
 
   def displayDeposit(): Unit= {
@@ -36,6 +36,8 @@ object ATMDisplay {
   def displayEndApp(atmData: String):Unit = {
     println(atmData)
   }
+
+
 
 
 }

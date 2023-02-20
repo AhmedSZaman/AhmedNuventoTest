@@ -4,54 +4,55 @@ import model.AccountSaving
 import model.ATMEngine
 import view.ATMDisplay
 object ATMContoller {
-  private val engineAtm = ATMEngine
-  private val displayATM = ATMDisplay
+
   def main(args: Array[String]): Unit = {
-
-
+    val engineAtm = new ATMEngine
+    val displayATM = new ATMDisplay
     try {
       engineAtm.initialise()
       displayATM.displayLogin()
       val userIDInput = scala.io.StdIn.readLine()
       engineAtm.userLogin(userIDInput)
-      mainMenu()
+      mainMenu(displayATM, engineAtm)
     } catch{
       case e: Exception => println("Error Occurred: "+ e)
         main(args)
       }
   }
-  private def mainMenu(): Unit = {
+  private def mainMenu(display: ATMDisplay, engine: ATMEngine): Unit = {
     var isAppEnded: Boolean = false
     while (!isAppEnded) {
-      displayATM.displayMenu(engineAtm.currUser.getUserName())
+      display.displayMenu(engine.currUser.getUserName())
       val userOptionInput = scala.io.StdIn.readInt()
       userOptionInput match
-        case 1 => depositOption()
-        case 2 => withdrawOption()
-        case 3 => displayATM.displayBalance(engineAtm.checkBalance())
+        case 1 => depositOption(display, engine)
+        case 2 => withdrawOption(display, engine)
+        case 3 => display.displayBalance(engine.checkBalance())
         case 4 =>
-          engineAtm.quitApp()
-          displayATM.displayEndApp(engineAtm.dataToString())
+          engine.quitApp()
+          display.displayEndApp(engine.dataToString())
           isAppEnded = true
     }
   }
 
-  private def depositOption(): Unit = {
-    displayATM.displayAccountSelect("Deposit too", engineAtm.currAccCheque.getNumber(), engineAtm.currAccSaving.getNumber())
+  private def depositOption(display: ATMDisplay, engine: ATMEngine): Unit = {
+    display.displayAccountSelect("Deposit too", engine.getAccountNumbers())
     val accSelectedInput = scala.io.StdIn.readInt()
-    engineAtm.userInputAccCheck(accSelectedInput)
-    displayATM.displayDeposit()
+    engine.userInputAccCheck(accSelectedInput)
+
+    display.displayDeposit()
     val depositInput = scala.io.StdIn.readFloat()
-    engineAtm.depositMoney(depositInput, accSelectedInput)
+    engine.depositMoney(depositInput, accSelectedInput)
   }
 
-  private def withdrawOption(): Unit ={
-    displayATM.displayAccountSelect("Withdraw from", engineAtm.currAccCheque.getNumber(), engineAtm.currAccSaving.getNumber())
+  private def withdrawOption(display: ATMDisplay, engine: ATMEngine): Unit ={
+    display.displayAccountSelect("Withdraw from", engine.getAccountNumbers())
     val accSelectedInput = scala.io.StdIn.readInt()
-    engineAtm.userInputAccCheck(accSelectedInput)
-    displayATM.displayWithdraw(engineAtm.getAccountTypeBalance(accSelectedInput))
+    engine.userInputAccCheck(accSelectedInput)
+
+    display.displayWithdraw(engine.getAccountTypeBalance(accSelectedInput))
     val withdrawInput = scala.io.StdIn.readFloat()
-    engineAtm.withdrawMoney(withdrawInput, accSelectedInput)
+    engine.withdrawMoney(withdrawInput, accSelectedInput)
   }
 }
 
