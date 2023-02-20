@@ -14,8 +14,7 @@ class User{
     this.ownerID = userDetails(3)
     
   }
-
-
+  
   def getUserName(): String = {
     val userName: String = s"$firstName $lastName"
     return userName

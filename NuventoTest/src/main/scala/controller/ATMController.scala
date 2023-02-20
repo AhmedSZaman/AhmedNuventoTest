@@ -3,32 +3,41 @@ import model.Account
 import model.AccountSaving
 import model.ATMEngine
 import view.ATMDisplay
-object ATMContoller {
+object ATMController {
 
+  //Any Exception thrown will restarted from main re-intialising everything, have to use quit option to end program
+  //Using MVC Pattern where ATMEngine holds all calculation code, ATMDisplay holds all code to update the user
+  //and ATMContoller gets the input from user and acts as the middle man between the two other classes.
   def main(args: Array[String]): Unit = {
-    val engineAtm = new ATMEngine
-    val displayATM = new ATMDisplay
+    val engine = new ATMEngine
+    val display = new ATMDisplay
+
     try {
-      engineAtm.initialise()
-      displayATM.displayLogin()
+      engine.initialise()
+
+      display.displayLogin()
       val userIDInput = scala.io.StdIn.readLine()
-      engineAtm.userLogin(userIDInput)
-      mainMenu(displayATM, engineAtm)
+      engine.userLogin(userIDInput)
+
+      mainMenu(display, engine)
     } catch{
       case e: Exception => println("Error Occurred: "+ e)
         main(args)
       }
   }
+
   private def mainMenu(display: ATMDisplay, engine: ATMEngine): Unit = {
+
     var isAppEnded: Boolean = false
     while (!isAppEnded) {
       display.displayMenu(engine.currUser.getUserName())
-      val userOptionInput = scala.io.StdIn.readInt()
+      val userOptionInput = scala.io.StdIn.readLine()
+
       userOptionInput match
-        case 1 => depositOption(display, engine)
-        case 2 => withdrawOption(display, engine)
-        case 3 => display.displayBalance(engine.checkBalance())
-        case 4 =>
+        case "1" => depositOption(display, engine)
+        case "2" => withdrawOption(display, engine)
+        case "3" => display.displayBalance(engine.checkBalance())
+        case "q" =>
           engine.quitApp()
           display.displayEndApp(engine.dataToString())
           isAppEnded = true

@@ -1,0 +1,51 @@
+Object ATMController
+
+  Main()
+    new ATMEngine
+    new ATMDisplay
+
+    try
+
+
+        ATMEngine.intialiseATM
+        ATMDisplay.login
+        INPUT userIDInput
+        ATMEngine.userLogin(userIDInput)
+
+
+        ATMDisplay.displayMenu(ATMEngine.currentUser.getName)
+        INPUT userOptionInput
+
+        BOOLEAN isAppEnded = FALSE
+
+        while(!isAppEnded)
+            CASE userOption of
+                1:
+                    CALL FUNC ATMDisplay.displayAccountSelect("Deposit too", CALL FUNC ATMEngine.getAccountNumbers() )
+                    INPUT userSelectedAccount
+                    CALL FUNC ATMEngine.userInputCheck(userSelectedAccount)
+
+                    CALL FUNC ATMDisplay.displayDeposit()
+                    INPUT userDepositInput
+                    CALL FUNC ATMEngine.depositMoney(userDepositInput, userSelectedAccount)
+                2:
+                    CALL FUNC ATMDisplay.displayAccountSelect("Withdraw From", ATMEngine.getAccountNumbers())
+                    INPUT userSelectedAccount
+                    CALL FUNC ATMEngine.userInputCheck(userSelectedAccount)
+
+
+                    CALL FUNC ATMDisplay.displayWithdraw(ATMEngine.getAccTypeBalance(userSelectedAccount))
+                    INPUT userWithdrawInput
+                    CALL FUNC ATMEngine.deposit(userWithdrawInput, userSelectedAccount)
+                3:
+                    CALL FUNC ATMDisplay.displayBalance(ATMEngine.checkBalance())
+                4:
+                    CALL FUNC ATMEngine.quitApp()
+                    CALL FUNC ATMDisplay.displayQuitApp( ATMEngine.dataToString())
+                    isAppEnded = TRUE
+
+    catch
+        println(ERROR MSG)
+        main()
+
+

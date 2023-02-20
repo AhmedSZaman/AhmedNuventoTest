@@ -1,11 +1,9 @@
 Object ATMDisplay
 
-    void Function displayLogin
+    VOID FUNCTION displayLogin
         print "Please enter User ID"
 
-
-
-    void FUNCTION displayMenu PARAM (STRING userName)
+    VOID FUNCTION displayMenu PARAM (STRING userName)
         println("Welcome "+ userName+  "Choose Option")
         println("Option1")
         println("Option2")
@@ -16,18 +14,14 @@ Object ATMDisplay
         println("1 For "+ chequeNumber +" (Cheque)")
         println("2 For "+ savingNumber +" (Saving)")
 
-    VOID Function displayDeposit()
+    VOID FUNCTION displayDeposit()
         println("Please enter money to deposit")
 
     VOID FUNCTION displayWithdraw(INT accountBalance)
         println("How much do you wish to withdraw? Balance =" + accountBalance)
 
-    VOID FUNCTION displayBalance(TUPLE accountBalance)
+    VOID FUNCTION displayBalance((FLOAT,FLOAT) accountBalance)
         println("Cheque Balance = $" + accountBalnce(0))
         println("Saving Balance = $" + accountBalnce(1))
-
-
-    displayError(String errorMsg)
-        println("ERROR -"+ errorMsg)
 
     displayEndApp

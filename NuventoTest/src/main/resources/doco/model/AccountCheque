@@ -1,0 +1,5 @@
+Object AccountCheque extends Account
+    OVERRIDE FUNCTION accountToString()
+        accountStirng = ownerID, accNumber, "CHEQUE", balance
+        return accString
+      }

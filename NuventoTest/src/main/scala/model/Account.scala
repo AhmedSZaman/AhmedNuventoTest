@@ -1,11 +1,11 @@
 package model
 
 class  Account {
-  private var ownerID: String = "Null"
-  private var accNumber: Int = -1
-  private var balance: Float = -1.00
+  private var ownerID: String = "NULL"
+  private var accNumber: String = "ERROR"
+  private var balance: Float = 0.00
 
-  def Account(accountDetails: (String, Int, Float)): Unit = {
+  def Account(accountDetails: (String, String, Float)): Unit = {
     this.ownerID = accountDetails(0)
     this.accNumber = accountDetails(1)
     this.balance = accountDetails(2)
@@ -15,7 +15,7 @@ class  Account {
     return ownerID
   }
 
-  def getNumber(): Int = {
+  def getNumber(): String = {
     return accNumber
   }
 
@@ -27,6 +27,7 @@ class  Account {
     balance = newBalance
   }
 
+  //Gets overriden in child objects
   def accToString(): String = {
     return "account details not found"
   }

@@ -1,5 +1,7 @@
 package view
 
+
+//ATMDisplay hold code to update the users view and make the terminal look presentable.
 class ATMDisplay {
 
   def displayLogin(): Unit ={
@@ -7,14 +9,14 @@ class ATMDisplay {
   }
 
   def displayMenu(userName: String): Unit = {
-    println("Welcome " + userName + ", Choose Option")
+    println("\n Welcome " + userName + ", Choose Option")
     println("1 - Deposit Money")
     println("2 - Withdraw Money")
     println("3 - Check Balance")
-    println("4 - Quit App")
+    println("q - Quit App")
   }
 
-  def displayAccountSelect(optionSelected: String, accoutNumber: (Int, Int)): Unit ={
+  def displayAccountSelect(optionSelected: String, accoutNumber: (String, String)): Unit ={
     println("Which Account would you like to " + optionSelected)
     println("1 For " + accoutNumber(0) + " (Cheque)")
     println("2 For " + accoutNumber(1) + " (Saving)")

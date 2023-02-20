@@ -1,0 +1,28 @@
+Object Users
+
+    STRING  firstName       = "NULL"
+    STRING  lastName        = "NULL"
+    STRING  accountOwnerID  = "NULL"
+    INT     mobile          = -1
+
+    FUNCTION Users PARAM (newfirstName, newlastName, newaccountOwnerID, newMobile)
+        firstName       = newfirstName
+        lastName        = newlastName
+        accountOwnerID  = newaccountOwnerID
+        mobile          = newMobile
+
+
+    INT FUNCTION getUserName()
+        userName = Users[currentUser].getFirstName + Users[currentUser].getLastName
+        return userName
+
+
+    INT FUNCTION getAccountOwnerID()
+        return accountOwnerID
+
+
+    INT FUNCTION getMobile()
+        return mobile
+    
+    STRING FUNCTION userToString()
+        return STRING(user)

@@ -9,7 +9,7 @@ class ATMEngineTest {
     engine.initialise()
     engine.userLogin("001")
     engine.depositMoney(20.00, 1)
-    engine.withdrawMoney(100.10, 2)
+    engine.withdrawMoney(10.10, 2)
     engine.checkBalance()
     engine.quitApp()
   }

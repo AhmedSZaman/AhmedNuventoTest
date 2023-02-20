@@ -1,0 +1,123 @@
+object ATMEngine
+
+    Collection chequesAccounts[]
+    Collection savingsAccounts[]
+    Collection users[]
+    Users currentUser = -1
+    AccountSaving currentAccountSaving
+    AccountCheque currentChequeAccount
+    Collection accountsInUse[2]
+
+    VOID FUNCTION intialiseATM()
+        loadUsers()
+        loadAccounts()
+
+
+    VOID FUNCTION loadUsers()
+        openingUserData = fromFile("PATH TO INPUT FILE")
+        FOR line in openingUserData
+            if line != 0
+                userDataLine = split line by (",")
+                newUser = new User(userDataline(0),userDataline(1),userDataline(2))
+                users.append(newUser)
+
+
+    VOID FUNCTION loadAccounts()
+        openingAccountData = fromFile("PATH TO INPUT FILE")
+        FOR line in openingAccountData
+            if line != 0
+                accountDataLine = split line by (",")
+
+                if (accountDataLine == "Cheque")
+                    newChequeAccount = new AccountCheque(accountDataLine(0),accountDataLine(1),accountDataLine(2),accountDataLine(3))
+                    chequesAccounts.append(newChequeAccount)
+                else
+                    newSavingsAccount = new AccountSavings(accountDataLine(0),accountDataLine(1),accountDataLine(2),accountDataLine(3))
+                    savingAccounts.append(newSavingsAccount)
+
+
+
+    VOID FUNCTION userLogin(userInput)
+        FOR every user in users:
+            IF (user.getUserID == userInput)
+                currentUser = user
+
+        IF currentUser.getUserID == "NULL"
+            throw ERROR
+        ELSE
+            setActiveAccounts
+
+
+    VOID FUNCTION setActiveAccounts()
+        FOR chequeAccount in chequeAccounts:
+            IF (currentUser.getUserID == savingAccount.getOwnerID)
+                accountsInUse[0] = chequeAccounts(chequeAccount)
+
+        FOR every savingAccount in savingAccounts:
+            IF (currentUser.getUserID == savingAccount.getOwnerID)
+                accountsInUse[1] = savingAccounts(savingAccount)
+
+
+    VOID FUNCTION getAccountInUse PARAM (INT userSelectedAccount)
+        return accountsInUse(userSelectedAccount-1)
+    
+    
+    VOID FUNCTION depositMoney PARAM (INT userDepositInput,INT userSelectedAccount)
+        ACCOUNT accountInUse = getAccountInUse(userSelectedAccount)
+        FLOAT newBalance = accountInUse.getBalance() + userDepositInput
+        accountInUse.setBalance(newBalance)
+
+
+    INT FUNCTION getAccTypeBalance PARAM(FLOAT userSelectedAccount)
+        ACCOUNT accountInUse = getAccountInUse(userSelectedAccount)
+        return accountInUse.getBalance()
+
+
+    VOID FUNCTION withdrawMoney PARAM (INT userWithdrawInput, INT userSelectedAccount)
+        INT currentBalance = getAccTypeBalance(userSelectedAccount)
+
+        IF  currentBalance is greater than or equal to userWithdrawInput THEN
+            ACCOUNT accountInUse = getAccountInUse(userSelectedAccount)
+            FLOAT newBalance = accountInUse.getBalance() - userDepositInput
+            accountInUse.setBalance(newBalance)
+        ELSE
+            THROW ERROR
+
+
+    VOID FUNCTION userInputAccCheck PARAM (INT userSelectedAccount)
+         ACCOUNT accountInUse = getAccountInUse(userSelectedAccount)
+         IF accountInUse.getOwnerID == "NULL"
+            THROW ERROR
+     
+            
+    (FLOAT FLOAT) FUNCTION checkBalance()
+        return accountsInUseArray(0).getBalance(), accountsInUseArray(1).getBalance()
+
+
+    (STRING,STRING) FUNCTION getAccountNumbers()
+        return accountsInUseArray(0).getNumber(), accountsInUseArray(1).getNumber()
+    
+    
+    STRING FUNCTION dataToString()
+        STRING superString
+        
+        FOR user om Users
+            superString += user
+        FOR savingAccount in savingsAccounts
+            superString += savingAccount
+        FOR chequeAccount in chequeAccounts
+            superString += chequeAccount  
+        return superString 
+      
+        
+    VOID FUNCTION quitApp()
+        openUserFile = File("PATH TO FILE")
+        FOR user in Users
+            
+        openUserFile.close()
+        
+        openAccountFile = File("PATH TO FILE")
+        FOR savingAccount in savingsAccounts
+            openAccountFile.write(savingAccount)
+        FOR chequeAccount in chequeAccounts
+            openAccountFile.write(chequeAccount)

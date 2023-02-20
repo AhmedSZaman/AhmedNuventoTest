@@ -1,0 +1,28 @@
+Object Account
+
+    STRING ownerID     = NULL
+    STRING accNumber   = NULL
+    FLOAT balance     = 0.00
+
+    FUNCTION Account(PARAMETERS newOwnerID, newAccNumber, newBalance)
+        ownerID = newOwnerID
+        accNumber = newAccNumber
+        balance = newBalance
+
+    STRING FUNCTION getAccountOwnerID()
+        return ownerID
+
+    STRING FUNCTION getAccountNumber()
+        return number
+
+    STRING FUNCTION getBalance()
+        return balance
+
+    VOID FUNCTION setBalance() PARAM (FLOAT newBalance)
+        balance = newBalance
+
+    STRING accountToString()
+        return STRING(Account)
+
+
+

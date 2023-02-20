@@ -1,0 +1,5 @@
+Object AccountSaving extends Account
+    OVERRIDE FUNCTION accountToString()
+        accountStirng = ownerID, accNumber, "SAVING", balance
+        return accString
+      }
