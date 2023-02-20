@@ -16,10 +16,8 @@ class ATMEngine {
   private val accCheques = new ArrayBuffer[AccountCheque]()
   private val users = ArrayBuffer[User]()
   var currUser = new User
-  var currAccSaving = new AccountSaving
-  var currAccCheque = new AccountCheque
-
   private val accountArray = new Array[Account](2)
+
   case class ErrorHandling(ErrorMsg: String) extends Exception(ErrorMsg){}
   def initialise(): Unit = {
     loadAccounts()
@@ -28,19 +26,21 @@ class ATMEngine {
 
   private def loadAccounts(): Unit={
     val openingAccData = Source.fromFile("src/main/resources/data/OpeningAccountsData.txt")
-    for (line <- openingAccData.getLines()) {
-      val dataLine = line.split("\\|\\|\\|")
-      val accDetails = (dataLine(0), dataLine(1).toInt, dataLine(3).toFloat)
+    for ((line,lineNumber) <- openingAccData.getLines().zipWithIndex) {
+      if (lineNumber != 0) {
+        val dataLine = line.split("\\|\\|\\|")
+        val accDetails = (dataLine(0), dataLine(1).toInt, dataLine(3).toFloat)
 
-      if (dataLine(2).matches("Cheque")) {
-        val tempChequeAcc = new AccountCheque()
-        tempChequeAcc.Account(accDetails)
-        accCheques.append(tempChequeAcc)
-      }
-      else {
-        val tempSavingAcc = new AccountSaving()
-        tempSavingAcc.Account(accDetails)
-        accSavings.append(tempSavingAcc)
+        if (dataLine(2).matches("Cheque")) {
+          val tempChequeAcc = new AccountCheque()
+          tempChequeAcc.Account(accDetails)
+          accCheques.append(tempChequeAcc)
+        }
+        else {
+          val tempSavingAcc = new AccountSaving()
+          tempSavingAcc.Account(accDetails)
+          accSavings.append(tempSavingAcc)
+        }
       }
     }
     openingAccData.close()
@@ -49,13 +49,15 @@ class ATMEngine {
 
   private def loadUsers(): Unit ={
     val openingUserData = Source.fromFile("src/main/resources/data/UserInfo.txt")
-    for (line <- openingUserData.getLines()) {
-      val userDataLine = line.split(",")
-      val userDetails = (userDataLine(0), userDataLine(1), userDataLine(2).toInt, userDataLine(3))
+    for ((line, lineNumber) <- openingUserData.getLines().zipWithIndex) {
+      if (lineNumber != 0) {
+        val userDataLine = line.split(",")
+        val userDetails = (userDataLine(0), userDataLine(1), userDataLine(2), userDataLine(3))
 
-      val tempUser = new User()
-      tempUser.User(userDetails)
-      users.append(tempUser)
+        val tempUser = new User()
+        tempUser.User(userDetails)
+        users.append(tempUser)
+      }
     }
     openingUserData.close()
 
@@ -73,6 +75,9 @@ class ATMEngine {
   }
 
   private def setActiveAccounts(userInput: String): Unit={
+    var currAccSaving = new AccountSaving
+    var currAccCheque = new AccountCheque
+
     for (accCheque <- accCheques.indices) {
       val accOwnerID = accCheques(accCheque).getOwnerID()
       if (currUser.getOwnerID.matches(accOwnerID)) currAccCheque = accCheques(accCheque)
@@ -148,6 +153,7 @@ class ATMEngine {
 
   def quitApp(): Unit = {
     val f = new FileWriter("outputFile1.txt")
+    f.write("FirstName,Surname,Mobile,AccountOwnerID\n")
     val b = new BufferedWriter(f)
     for (user: User<- users){
       f.write(user.userToString() + "\n")
@@ -157,7 +163,7 @@ class ATMEngine {
 
     val f2 = new FileWriter("outputFile2.txt")
     val b2 = new BufferedWriter(f2)
-
+    f2.write("AccountOwnerID|||AccountNumber|||AccountType|||OpeningBalance\n")
     for (savingAcc: AccountSaving <- accSavings) {
       f2.write(savingAcc.accToString() + "\n")
     }

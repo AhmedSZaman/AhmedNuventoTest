@@ -25,7 +25,7 @@ class ATMDisplay {
   }
 
   def displayWithdraw(accountBalance: Float): Unit = {
-    println("How much do you wish to withdraw? Balance =" + accountBalance)
+    println("How much do you wish to withdraw? Balance =$"  + accountBalance)
   }
 
   def displayBalance(accountBalance: (Float,Float)): Unit = {
