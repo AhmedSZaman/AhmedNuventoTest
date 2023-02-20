@@ -64,30 +64,30 @@ class ATMEngine {
   def userLogin(userInput: String): Unit = {
 
     for(tempUser <- users.indices){
-      if (users(tempUser).getOwnerID.matches(userInput)){
-        currUser = users(tempUser)
-      }
+      if (users(tempUser).getOwnerID.matches(userInput)) currUser = users(tempUser)
     }
 
     if(currUser.getOwnerID.matches("NULL")) throw ErrorHandling(s"UserID $userInput Not found")
-    else{
-      for (accCheque <- accCheques.indices) {
-        val accOwnerID = accCheques(accCheque).getOwnerID()
-        if (currUser.getOwnerID.matches(accOwnerID)) {
-          currAccCheque = accCheques(accCheque)
-          accountArray(0) = currAccCheque
-        }
-      }
-      if !currAccCheque.getOwnerID().matches(userInput) then currAccCheque.Account("NULL",-1,0.00.toFloat)
+    else setActiveAccounts(userInput)
 
-      for (accSaving <- accSavings.indices) {
-        val accOwnerID = accSavings(accSaving).getOwnerID()
-        if (currUser.getOwnerID.matches(accOwnerID)) {
-          currAccSaving = accSavings(accSaving)
-          accountArray(1) = currAccSaving
-        }
-      }
-      if !currAccSaving.getOwnerID().matches(userInput) then currAccSaving.Account("NULL", -1, 0.00.toFloat)}
+  }
+
+  private def setActiveAccounts(userInput: String): Unit={
+    for (accCheque <- accCheques.indices) {
+      val accOwnerID = accCheques(accCheque).getOwnerID()
+      if (currUser.getOwnerID.matches(accOwnerID)) currAccCheque = accCheques(accCheque)
+    }
+
+    for (accSaving <- accSavings.indices) {
+      val accOwnerID = accSavings(accSaving).getOwnerID()
+      if (currUser.getOwnerID.matches(accOwnerID)) currAccSaving = accSavings(accSaving)
+    }
+
+    if !currAccCheque.getOwnerID().matches(userInput) then currAccCheque.Account("NULL", -1, 0.00.toFloat)
+    if !currAccSaving.getOwnerID().matches(userInput) then currAccSaving.Account("NULL", -1, 0.00.toFloat)
+
+    accountArray(0) = currAccCheque
+    accountArray(1) = currAccSaving
   }
 
   private def getAccountType(selectedAccount: Int): Account = {
@@ -139,21 +139,9 @@ class ATMEngine {
   }
 
   def checkBalance():(Float,Float) = {
-    var chequeBalance: Float = 0.00
-    var savingBalance: Float = 0.00
-    var accountBalance: Float = 0.00
-    var balanceArray = new Array[Float](2)
-
-/*
-    if (currAccCheque.getOwnerID().matches("NULL")) chequeBalance = 0.00
-    else chequeBalance = currAccCheque.getBalance()
-
-    if (currAccSaving.getOwnerID().matches("NULL")) savingBalance = 0.00
-    else savingBalance = currAccSaving.getBalance()
-*/
+    val balanceArray = new Array[Float](2)
     for ((account, i) <- accountArray.zipWithIndex){
-      if (account.getOwnerID().matches("NULL")) balanceArray(i) = 0.00
-      else balanceArray(i) = account.getBalance()
+      balanceArray(i) = account.getBalance()
     }
     return (balanceArray(0), balanceArray(1))
   }
